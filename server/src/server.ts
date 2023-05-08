@@ -10,7 +10,17 @@ app.use(express.json());
 
 const clientState = new Map<string, ClientState>()
 
-const compare = (desiredState: ClientState, clientState: ClientState): Mutation | undefined => {
+const parseRules = (entries: ClientState): Rule[] => {
+    return Object.entries(entries.rules).map((val) => {
+        return {
+            index: Number(val[0]),
+            rule: val[1].rule,
+            ver: val[1].ver
+        }
+    })
+}
+
+const calculateMutation = (desiredState: ClientState, clientState: ClientState): Mutation | undefined => {
     let mutation: Mutation | undefined;
 
     if (
@@ -23,26 +33,8 @@ const compare = (desiredState: ClientState, clientState: ClientState): Mutation 
         }
     }
 
-
-    // loop over all rules
-    // find rules that exist in desired state, dont exist in current state - add them to the 'add' list
-    // find rules that exist in the currentState, dont exist in desired state - add them to the 'remove' list
-
-    const desired: Rule[] = Object.entries(desiredState.rules).map((val) => {
-        return {
-            index: Number(val[0]),
-            rule: val[1].rule,
-            ver: val[1].ver
-        }
-    });
-
-    const current: Rule[] = Object.entries(clientState.rules).map((val) => {
-        return {
-            index: Number(val[0]),
-            rule: val[1].rule,
-            ver: val[1].ver
-        }
-    });
+    const desired = parseRules(desiredState);
+    const current = parseRules(clientState);
 
     const toAdd = desired.filter((desiredItem) => {
         return !current.find((currentItem) => desiredItem.rule === currentItem.rule && desiredItem.ver === currentItem.ver);
@@ -96,7 +88,7 @@ app.put('/announce', (req: Request<Announce>, res: Response) => {
         console.log("Set new state");
     } else {
         const currentState = req.body.clientState;
-        const mutation = compare(storedState, currentState);
+        const mutation = calculateMutation(storedState, currentState);
         if (mutation) {
             response = {
                 ...response,
