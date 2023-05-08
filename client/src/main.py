@@ -6,7 +6,7 @@ print("....")
 # Should be generated
 client_id = "1234abcd"
 
-ufw_status = ufw.status()
+ufw_status = ufw.status(detailed=True)
 print(ufw_status)
 
 

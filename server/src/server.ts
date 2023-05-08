@@ -1,6 +1,6 @@
 import express, { Express, Request, Response } from 'express';
 import { Announce } from './model/dto/Announce';
-import {ClientState} from './model/dto/ClientState';
+import {ClientState, Rule} from './model/dto/ClientState';
 import {Mutation} from './model/dto/Mutation';
 
 const app: Express = express();
@@ -28,22 +28,29 @@ const compare = (desiredState: ClientState, clientState: ClientState): Mutation 
     // find rules that exist in desired state, dont exist in current state - add them to the 'add' list
     // find rules that exist in the currentState, dont exist in desired state - add them to the 'remove' list
 
-    const desired: {index: number, rule: string}[] = Object.entries(desiredState.rules).map((val) => {
+    const desired: Rule[] = Object.entries(desiredState.rules).map((val) => {
         return {
-            index: Number(val[0]), rule: val[1] as string
+            index: Number(val[0]),
+            rule: val[1].rule,
+            ver: val[1].ver
         }
     });
 
-    const current: {index: number, rule: string}[] = Object.entries(clientState.rules).map((val) => {
+    const current: Rule[] = Object.entries(clientState.rules).map((val) => {
         return {
-            index: Number(val[0]), rule: val[1] as string
+            index: Number(val[0]),
+            rule: val[1].rule,
+            ver: val[1].ver
         }
     });
 
     const toAdd = desired.filter((desiredItem) => {
-        return !current.find((currentItem) => desiredItem.rule === currentItem.rule);
+        return !current.find((currentItem) => desiredItem.rule === currentItem.rule && desiredItem.ver === currentItem.ver);
     }).map((item) => {
-        return item.rule;
+        return {
+            rule: item.rule,
+            ver: item.ver
+        }
     });
 
     if (toAdd.length > 0) {
@@ -55,7 +62,7 @@ const compare = (desiredState: ClientState, clientState: ClientState): Mutation 
 
     // remove
     const toRemove = current.filter((unDesiredItem) => {
-        return !desired.find((currentItem) => unDesiredItem.rule === currentItem.rule);
+        return !desired.find((currentItem) => unDesiredItem.rule === currentItem.rule && unDesiredItem.ver === currentItem.ver);
     }).map((item) => {
         return item.index;
     });

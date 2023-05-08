@@ -6,8 +6,17 @@ export interface Default {
     routed: StringAllowDeny
 }
 
+interface RuleInternal {
+    rule: string
+    ver: string
+}
+
+export interface Rule extends RuleInternal {
+    index: number
+}
+
 export interface ClientState {
     status: "active" | "inactive"
     default: Default
-    rules: any // looks like '1': 'allow SSH'
+    rules: { [id: string]: RuleInternal }
 }
