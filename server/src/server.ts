@@ -100,6 +100,11 @@ app.put('/announce', (req: Request<Announce>, res: Response) => {
     res.json(response);
 });
 
+app.get('/clients/all', (_, res: Response) => {
+    res.status(200);
+    
+});
+
 app.listen(port, () => {
     console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
 });
