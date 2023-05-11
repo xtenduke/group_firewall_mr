@@ -8,7 +8,7 @@ const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
-const clientState = new Map<string, ClientState>()
+const clientState = new Map<string, ClientState>();
 
 const parseRules = (entries: ClientState): Rule[] => {
     return Object.entries(entries.rules).map((val) => {
@@ -16,9 +16,9 @@ const parseRules = (entries: ClientState): Rule[] => {
             index: Number(val[0]),
             rule: val[1].rule,
             ver: val[1].ver
-        }
-    })
-}
+        };
+    });
+};
 
 const calculateMutation = (desiredState: ClientState, clientState: ClientState): Mutation | undefined => {
     let mutation: Mutation | undefined;
@@ -30,7 +30,7 @@ const calculateMutation = (desiredState: ClientState, clientState: ClientState):
     ) {
         mutation = {
             default: desiredState.default
-        }
+        };
     }
 
     const desired = parseRules(desiredState);
@@ -42,14 +42,14 @@ const calculateMutation = (desiredState: ClientState, clientState: ClientState):
         return {
             rule: item.rule,
             ver: item.ver
-        }
+        };
     });
 
     if (toAdd.length > 0) {
         mutation = {
             ...mutation,
             add: toAdd
-        }
+        };
     }
 
     // remove
@@ -63,25 +63,25 @@ const calculateMutation = (desiredState: ClientState, clientState: ClientState):
         mutation = {
             ...mutation,
             remove: toRemove
-        }
+        };
     }
 
     console.log("mutation");
     console.log(mutation);
 
     return mutation;
-}
+};
 
-app.put('/announce', (req: Request<Announce>, res: Response) => {
+app.put("/announce", (req: Request<Announce>, res: Response) => {
     res.status(200);
 
     console.log(`Received announce for ${req.body.clientId}`);
 
-    const storedState = clientState.get(req.body.clientId)
+    const storedState = clientState.get(req.body.clientId);
 
-    let response: any = {
+    let response: { status: string, mutation?: Mutation } = {
         status: "ok"
-    }
+    };
 
     if (!storedState) {
         clientState.set(req.body.clientId, req.body.clientState);
@@ -100,9 +100,8 @@ app.put('/announce', (req: Request<Announce>, res: Response) => {
     res.json(response);
 });
 
-app.get('/clients/all', (_, res: Response) => {
+app.get("/clients/all", (_, res: Response) => {
     res.status(200);
-    
 });
 
 app.listen(port, () => {
