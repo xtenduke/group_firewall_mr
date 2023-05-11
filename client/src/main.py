@@ -1,12 +1,12 @@
-import pyufw as ufw
 import requests
+import pyufw
 
 print("....")
 
 # Should be generated
 client_id = "1234abcd"
 
-ufw_status = ufw.status(detailed=True)
+ufw_status = pyufw.status(detailed=True)
 print(ufw_status)
 
 

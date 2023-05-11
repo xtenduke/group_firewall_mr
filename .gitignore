@@ -1,1 +1,3 @@
 client/group_firewall.egg-info
+__pycache__/
+venv
