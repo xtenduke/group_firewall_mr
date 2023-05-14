@@ -25,10 +25,10 @@ export class AnnounceController {
         };
 
         if (!storedState) {
-            this.database.clientStateSet(announce.clientId, announce.state);
+            this.database.clientStateSet(announce.clientId, announce.clientState);
             console.log("Set new state");
         } else {
-            const currentState = announce.state;
+            const currentState = announce.clientState;
             const mutation = this.calculateMutation(storedState, currentState);
             if (mutation) {
                 response = {
@@ -55,9 +55,9 @@ export class AnnounceController {
         let mutation: Mutation | undefined;
 
         if (
-            desiredState.default.incoming !== clientState.default.incoming
-            || desiredState.default.outgoing !== clientState.default.outgoing
-            || desiredState.default.routed !== clientState.default.routed
+            desiredState.default?.incoming !== clientState.default?.incoming
+            || desiredState.default?.outgoing !== clientState.default?.outgoing
+            || desiredState.default?.routed !== clientState.default?.routed
         ) {
             mutation = {
                 default: desiredState.default

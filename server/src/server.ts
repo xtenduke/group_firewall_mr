@@ -2,11 +2,15 @@ import express, { Express, Request, Response } from "express";
 import { Announce } from "./model/dto/Announce";
 import {AnnounceController} from "./controller/AnnounceController";
 import {DatabaseController} from "./controller/DatabaseController";
+import cors from "cors";
 
 const app: Express = express();
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
+app.use(cors({
+    origin: "http://fedora.local:3000"
+}));
 
 // fake DB shim
 const database = new DatabaseController();
@@ -25,6 +29,7 @@ app.put("/announce", (req: Request<Announce>, res: Response) => {
 
 app.get("/clients/all", (_, res: Response) => {
     res.status(200);
+    res.set("Access-Control-Allow-Origin", "*");
     const response = announceController.onGet();
     res.json(response);
 });

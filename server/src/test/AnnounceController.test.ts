@@ -25,12 +25,12 @@ describe("AnnounceController", () => {
     test("mutation server remove rule", () => {
         announceController.onAnnounce({
             clientId: testClientId,
-            state: testClientState
+            clientState: testClientState
         });
 
         const result = announceController.onAnnounce({
             clientId: testClientId,
-            state: {
+            clientState: {
                 ...testClientState,
                 rules: {}
             }
@@ -49,7 +49,7 @@ describe("AnnounceController", () => {
     test("Get returns all states", () => {
         announceController.onAnnounce({
             clientId: testClientId,
-            state: testClientState
+            clientState: testClientState
         });
 
         const getAll = announceController.onGet();

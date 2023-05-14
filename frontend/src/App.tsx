@@ -6,10 +6,9 @@ import MuiAppBar, {AppBarProps as MuiAppBarProps} from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import Badge from '@mui/material/Badge';
 import Container from '@mui/material/Container';
 import MenuIcon from '@mui/icons-material/Menu';
-import NotificationsIcon from '@mui/icons-material/Notifications';
+import ClientsList from './components/ClientsList'
 
 interface AppBarProps extends MuiAppBarProps {
     open?: boolean;
@@ -46,7 +45,7 @@ function AppContent() {
                 <AppBar position="absolute" open={open}>
                     <Toolbar
                         sx={{
-                            pr: '24px', // keep right padding when drawer closed
+                            pr: '24px', // keep right padding
                         }}
                     >
                         <IconButton
@@ -67,7 +66,7 @@ function AppContent() {
                             noWrap
                             sx={{flexGrow: 1}}
                         >
-                            Clients
+                            Group Firewall
                         </Typography>
                     </Toolbar>
                 </AppBar>
@@ -85,6 +84,7 @@ function AppContent() {
                 >
                     <Toolbar/>
                     <Container maxWidth="lg" sx={{mt: 4, mb: 4}}>
+                      <ClientsList />
                     </Container>
                 </Box>
             </Box>
