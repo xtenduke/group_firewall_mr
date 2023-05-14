@@ -84,7 +84,7 @@ function AppContent() {
                 >
                     <Toolbar/>
                     <Container maxWidth="lg" sx={{mt: 4, mb: 4}}>
-                      <ClientsList />
+                        <ClientsList/>
                     </Container>
                 </Box>
             </Box>
