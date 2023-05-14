@@ -4,7 +4,7 @@ import {AnnounceController} from "./controller/AnnounceController";
 import {DatabaseController} from "./controller/DatabaseController";
 
 const app: Express = express();
-const port = process.env.PORT || 32769;
+const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
