@@ -1,11 +1,7 @@
-import {Default} from "./ClientState"
+import {Default, RuleInternal} from "./ClientState";
 
 export interface Mutation {
     default?: Default
-    add?: any[]
-    remove?: any[]
-}
-
-export interface Removal {
-    index: number
+    add?: RuleInternal[]
+    remove?: number[]
 }
