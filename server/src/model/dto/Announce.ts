@@ -1,4 +1,4 @@
-import {ClientState} from "./ClientState"
+import {ClientState} from "./ClientState";
 
 export interface Announce {
     clientId: string
