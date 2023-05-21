@@ -4,8 +4,6 @@ export class DatabaseController {
     private clientState = new Map<string, ClientStateResponse>();
     
     public clientStateSet(id: string, data: ClientState) {
-        console.log("DB set state");
-        console.log(JSON.stringify(data));
         this.clientState.set(id, { id, ...data });
     }
     

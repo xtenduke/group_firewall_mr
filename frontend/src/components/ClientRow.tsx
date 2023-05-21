@@ -6,7 +6,7 @@ import Button from '@mui/material/Button';
 
 import {ClientStateResponse} from "../../../server/src/model/dto/ClientState";
 import {parseRules} from "../util/Rules";
-import RuleRow from "./RuleRow";
+import RulesList from "./RulesList";
 import AllowDeny from "./AllowDeny";
 
 export interface ClientRowProps {
@@ -24,17 +24,21 @@ const defaultsChange = (id: number, value: "allow" | "deny") => {
 }
 
 function ClientRowComponent(props: ClientRowProps) {
-    const [isOpen, setIsOpen] = React.useState<ClientStateResponse[]>([]);
-
     const {data} = props;
 
     return (
         <Card>
-            <Stack sx={{m: 2}} spacing={5}>
+            <Stack sx={{m: 3}} spacing={5}>
                 <Typography component="h3" variant="h6">
                     {data.id}
                 </Typography>
-                <div>State: {data.status}</div>
+
+                <div>
+                    <Typography component="h3" variant="h6">
+                        State
+                    </Typography>
+                    {data.status}
+                </div>
                 <div>
                     <Typography component="h3" variant="h6">
                         Defaults
@@ -64,13 +68,8 @@ function ClientRowComponent(props: ClientRowProps) {
                     <Typography component="h3" variant="h6" color="secondary" gutterBottom>
                         Rules
                     </Typography>
-                    <Stack sx={{m: 1}} spacing={2}>
-                        {parseRules(data).map((item) => {
-                            return <RuleRow {...item}/>
-                        })}
-                    </Stack>
+                    <RulesList {...{rules: parseRules(data)}} />
                 </div>
-
                 <Stack direction="row" spacing={2}>
                     <Button variant="text">Add</Button>
                 </Stack>
