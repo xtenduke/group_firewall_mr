@@ -10,7 +10,8 @@
     "scripts": {
         "start:dev": "yarn build && node dist/server.js",
         "build": "tsc",
-        "test": "jest"
+        "test": "jest",
+		"shiv": "echo check from server"
     },
     "dependencies": {
         "body-parser": "^1.20.2",
