@@ -12,6 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - run: git checkout ${{ github.head_ref || github.ref_name }}
+      - run: git fetch main:main
       - run: curl https://raw.githubusercontent.com/xtenduke/shivr/main/download.sh | sudo bash
       - run: shivr --detect-changes --concurrency 2 --command install
       - run: shivr --detect-changes --concurrency 2 --command build

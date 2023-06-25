@@ -2,7 +2,7 @@
     "scripts": [
         {
             "name": "build",
-            "run": "yarn build"
+            "run": "yarnn build"
         },
 		{
 			"name": "install",
