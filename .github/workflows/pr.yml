@@ -15,6 +15,8 @@ jobs:
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.ref }}
+      - run: git checkout main
+      - run: git checkout feat/ci
       - run: curl https://raw.githubusercontent.com/xtenduke/shivr/main/download.sh | sudo bash
       - run: shivr --detect-changes --concurrency 2 --command install
       - run: shivr --detect-changes --concurrency 2 --command build
