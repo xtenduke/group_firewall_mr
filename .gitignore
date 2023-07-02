@@ -5,3 +5,5 @@ venv
 node_modules/
 dist/
 **/.fleet
+.idea/
+**/yarn-error.log

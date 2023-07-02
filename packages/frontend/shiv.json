@@ -1,0 +1,21 @@
+{
+    "scripts": [
+        {
+            "name": "build",
+            "run": "yarnn build"
+        },
+		{
+			"name": "install",
+			"run": "yarn install"
+		},
+		{
+			"name": "clean",
+			"run": "rm -rf node_modules"
+		},
+		{
+			"name": "shiv",
+			"run": "yarn shiv"
+		}
+    ]
+}
+

@@ -1,0 +1,29 @@
+name: PR
+
+on:
+  push:
+    branches: [ "main", "ci" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build_and_test:
+    name: Build and test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+      - name: Install yarn
+        run: npm i -g yarn
+      - name: Install shivr
+        run: curl https://raw.githubusercontent.com/xtenduke/shivr/main/download.sh | sudo bash
+      - name: Run install
+        run: shivr --detect-changes --concurrency 2 --command install
+      - name: Run build
+        run: shivr --detect-changes --concurrency 2 --command build
+      - name: Run test
+        run: shivr --detect-changes --concurrency 2 --command test
